@@ -1,0 +1,22 @@
+<a routerLink="/"> <button mat-button >All</button></a>
+
+
+<a routerLink="/chart"><button mat-button >Chart</button></a>
+
+ 
+
+
+<a routerLink="callapi"><button mat-button [matMenuTriggerFor]="belowMenu">Call API</button></a>
+<mat-menu #belowMenu="matMenu" yPosition="below">
+  <a routerLink="/0min"><button mat-menu-item>0 min</button></a>
+  <a routerLink="/1-5min"><button mat-menu-item>1-5 min</button></a>
+  <a routerLink="/6-15min"><button mat-menu-item>6-15 min</button></a>
+  <a routerLink="/16-30min"><button mat-menu-item>16-30 min</button></a>
+  <a routerLink="/+30min"><button mat-menu-item>+30 min</button></a>
+</mat-menu>
+
+
+
+
+
+

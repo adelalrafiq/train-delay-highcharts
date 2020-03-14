@@ -14,6 +14,9 @@ import { C1C5minComponent } from './c1-c5min/c1-c5min.component';
 import { C6C15minComponent } from './c6-c15min/c6-c15min.component';
 import { C16C30minComponent } from './c16-c30min/c16-c30min.component';
 import { Morethan30minComponent } from './morethan30min/morethan30min.component';
+import { MatMenuModule} from '@angular/material/menu';
+import { NavbarComponent } from './navbar/navbar.component';
+import { AllComponent } from './all/all.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,9 @@ import { Morethan30minComponent } from './morethan30min/morethan30min.component'
     C1C5minComponent,
     C6C15minComponent,
     C16C30minComponent,
-    Morethan30minComponent
+    Morethan30minComponent,
+    NavbarComponent,
+    AllComponent
   ],
   imports: [
     BrowserModule,
@@ -34,6 +39,7 @@ import { Morethan30minComponent } from './morethan30min/morethan30min.component'
     BrowserAnimationsModule,
     MatTableModule,
     MatButtonModule,
+    MatMenuModule
   
   ],
   providers: [],
