@@ -1,67 +1,51 @@
 import { Component, OnInit } from '@angular/core';
 import { TrainDelayService } from '../services/train-delay.service';
 import { timer, pipe } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, delay } from 'rxjs/operators';
 
-export interface PeriodicElement {
-  delay: any;
-  
-}
 @Component({
   selector: 'app-c0min',
   templateUrl: './c0min.component.html',
   styleUrls: ['./c0min.component.css']
 })
 export class C0minComponent implements OnInit {
-  displayedColumns: string = 'delay';
-  dataSource : {};
+  displayedColumns: string = 'delay'; 
   title = 'Train Information';
-  
   trainInformation:any; 
 
-  stations$ = this.call.getPosts();
-  hhh$ = this.call.getDepartureDelay();
+  dataSource$ = this.call.getDepartureDelay();
   
 
   constructor(private call:TrainDelayService) { }
 
   ngOnInit(): void {
-    this.callAPI();
+   /*  this.callAPI(); */
   }
 
   //call api
   callAPI(){
     const info = timer(0,60000);
     info.pipe(switchMap(()=>
-    this.hhh$
+    this.dataSource$
     ))
     .subscribe(
       next=>{
-        console.log(next);
+        /* console.log(next); */
 
+        this.trainInformation = next;        
+        let count = 0;                   
+        for(let i=0,len=this.trainInformation.length;i<len; i++){           
+          /* console.log(this.trainInformation[i].delay); */
 
-
-        this.trainInformation = next;
-        /* this.dataSource=this.trainInformation.departures.departure.map(dep=>{
-          return {
-            station:dep.station,
-            departure:dep.time,
-            delay: dep.delay
-           
-          }
-        })     */
-        this.dataSource=[{
-          
-          delay: this.trainInformation.departures.departure.delay
-         
-        }];
-         console.log(this.dataSource);
-                 
+          if(this.trainInformation[i].delay==0){
+             count++;             
+            console.log(count);       
+          }          
+        }                          
       },
       error=>{
         console.log(error);
       },
     )  
   }
-
 }
