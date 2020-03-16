@@ -3,11 +3,6 @@ import { TrainDelayService } from '../services/train-delay.service';
 import { timer, pipe } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
-export interface PeriodicElement {
- 
-  delay:any;
-  
-}
 @Component({
   selector: 'app-c1-c5min',
   templateUrl: './c1-c5min.component.html',
@@ -15,42 +10,30 @@ export interface PeriodicElement {
 })
 export class C1C5minComponent implements OnInit {
 
-  displayedColumns: string = 'delay';
-  dataSource : {};
+  displayedColumns: string[] = ['delay']; 
   title = 'Train Information';
-  
   trainInformation:any; 
-
-  stations$ = this.call.getPosts()
+  delay:any;
+  dataSource$ = this.call. getNumberOfDelaysPerInterval();
+  
 
   constructor(private call:TrainDelayService) { }
 
   ngOnInit(): void {
+   /*  this.callAPI(); */
   }
 
   //call api
   callAPI(){
     const info = timer(0,60000);
     info.pipe(switchMap(()=>
-    this.call.getPosts()
+    this.dataSource$
     ))
     .subscribe(
       next=>{
         console.log(next);
-        this.trainInformation = next;
-        this.dataSource=this.trainInformation.departures.departure.map(dep=>{
-          return {      
-            delay: dep.delay
-          }
-        })
-        /* this.dataSource=[{
-         
-          delay: this.trainInformation.departures.departure[].delay
-          
-        }
-        }]; */
-         console.log(this.dataSource);
-                 
+        this.trainInformation = next; 
+        this.delay =this.trainInformation.count1to5;          
       },
       error=>{
         console.log(error);

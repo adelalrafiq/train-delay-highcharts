@@ -9,6 +9,13 @@ import * as Highcharts from 'highcharts';
 })
 export class ChartComponent {
 
+
+
+
+
+
+    
+
   Highcharts: typeof Highcharts = Highcharts; // required
   chartConstructor: string = 'chart'; // optional string, defaults to 'chart'
   chartOptions: Highcharts.Options = { 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TrainDelayService } from '../services/train-delay.service';
 import { timer, pipe } from 'rxjs';
-import { switchMap, delay } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-c0min',
@@ -9,11 +9,11 @@ import { switchMap, delay } from 'rxjs/operators';
   styleUrls: ['./c0min.component.css']
 })
 export class C0minComponent implements OnInit {
-  displayedColumns: string = 'delay'; 
+  displayedColumns: string[] = ['delay']; 
   title = 'Train Information';
   trainInformation:any; 
-
-  dataSource$ = this.call.getDepartureDelay();
+  delay:any;
+  dataSource$ = this.call. getNumberOfDelaysPerInterval();
   
 
   constructor(private call:TrainDelayService) { }
@@ -30,18 +30,19 @@ export class C0minComponent implements OnInit {
     ))
     .subscribe(
       next=>{
-        /* console.log(next); */
+        console.log(next);
+        this.trainInformation = next; 
+        this.delay =this.trainInformation.count0;
 
-        this.trainInformation = next;        
-        let count = 0;                   
+      /*  let count = 0;                   
         for(let i=0,len=this.trainInformation.length;i<len; i++){           
-          /* console.log(this.trainInformation[i].delay); */
+          console.log(this.trainInformation[i].delay); 
 
-          if(this.trainInformation[i].delay==0){
+           if(this.trainInformation[i].delay==0){
              count++;             
-            console.log(count);       
+            console.log(count);  
           }          
-        }                          
+        }         */                
       },
       error=>{
         console.log(error);

@@ -1,29 +1,12 @@
-  <div class="container">
+<div class="container">
   <h1>{{title}}</h1>
   <br>
   <button mat-raised-button color="primary" (click)="callAPI()">0min</button>
   <br>
-  <div *ngIf="trainInformation"> 
-      <span><h2>{{trainInformation.timestamp * 1000 | date : 'EEEE dd/LLL/yyyy'}}</h2></span>
-      <span><h2>{{'Train Departure'}}</h2></span>
+  <br>
+  <div *ngIf="delay"> 
       
-      <table mat-table [dataSource]="trainInformation" class="mat-elevation-z8">
- 
-        <!--- Note that these columns can be defined in any order.
-              The actual rendered columns are set as a property on the row definition" -->
-      
-        
-        <!-- Delay Column -->
-       <ng-container matColumnDef="delay">
-          <th mat-header-cell *matHeaderCellDef> Delay</th>
-          <td mat-cell  *matCellDef="let element"> {{element.delay}} </td>
-        </ng-container>
-       
-       
-         
-     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
+    <span><h2>{{delay}}</h2></span>
   
-</div>
+  </div>
 </div>
