@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
+import { TrainDelayService } from '../services/train-delay.service';
+import { timer } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 
 @Component({
@@ -7,21 +10,24 @@ import * as Highcharts from 'highcharts';
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.css']
 })
-export class ChartComponent {
-
-
-
-
-
-
-    
+export class ChartComponent implements OnInit{
+  
+  trainInformation:any; 
+  delay0:number;
+  delay1to5:number;
+  delay6to15:number;
+  delay16to30:number;
+  delayplus30:number;
+  dataSource$ = this.call.getNumberOfDelaysPerInterval();
+  info:any;
+  
 
   Highcharts: typeof Highcharts = Highcharts; // required
   chartConstructor: string = 'chart'; // optional string, defaults to 'chart'
-  chartOptions: Highcharts.Options = { 
+  chartOptions: any = { 
     chart: {
-      type: 'column'
-  },
+     type:'' 
+  }, 
   title: {
       text: 'Trains Delay'
   },
@@ -57,17 +63,59 @@ export class ChartComponent {
       }
   },
   series:[{
-    type: 'column',
+
     name: 'Trains Delay',
     
-    data: [10, 10, 10, 10, 10]
+    data:[]
 
   }]
-
+  
    }; // required
+   updateFlag: boolean=false;
+ 
+  constructor(private call:TrainDelayService) { }
   
-  
+  ngOnInit(){
+    this.callAPI();        
+   }
 
-  
+  callAPI(){
+     const info = timer(0,60000);
+     info.pipe(switchMap(()=>
+     this.dataSource$
+     
+     ))
+     .subscribe(
+       next=>{
+         console.log(next);
+         this.trainInformation = next; 
+         this.delay0 =this.trainInformation.count0;
+         this.delay1to5 =this.trainInformation.count1to5;
+         this.delay6to15 =this.trainInformation.count6to15;
+         this.delay16to30 =this.trainInformation.count16to30;
+         this.delayplus30 =this.trainInformation.countplus30;
+         this.chartOptions.series[0].data =[ 
+           this.delay0,
+           this.delay1to5,
+           this.delay6to15,
+           this.delay16to30,
+           this.delayplus30
+          ]
+          this.updateFlag=true;
+            
+       },
+       error=>{
+         console.log(error);
+      },
+    )      
+  }
 
+  updateChartTyppe(event:any){
+    let chartType = event.value;
+    if(chartType){
+      this.chartOptions.chart.type =chartType;
+      this.updateFlag=true;
+    }
+  }  
+    
 }

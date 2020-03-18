@@ -1,3 +1,4 @@
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
@@ -17,6 +18,7 @@ import { Morethan30minComponent } from './morethan30min/morethan30min.component'
 import { MatMenuModule} from '@angular/material/menu';
 import { NavbarComponent } from './navbar/navbar.component';
 import { AllComponent } from './all/all.component';
+
 
 @NgModule({
   declarations: [
@@ -39,7 +41,8 @@ import { AllComponent } from './all/all.component';
     BrowserAnimationsModule,
     MatTableModule,
     MatButtonModule,
-    MatMenuModule
+    MatMenuModule,
+    MatButtonToggleModule
   
   ],
   providers: [],
