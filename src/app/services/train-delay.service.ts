@@ -1,7 +1,7 @@
 import { Departure } from './../model/interfaces/departure';
 import { TrainInformation } from './../model/interfaces/train-information';
 import { Injectable } from '@angular/core';
-import {  HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { map, switchMap } from 'rxjs/operators';
 
 @Injectable({
